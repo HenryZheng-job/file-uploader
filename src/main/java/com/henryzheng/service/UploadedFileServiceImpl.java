@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -45,10 +47,10 @@ public class UploadedFileServiceImpl implements UploadedFileService {
     @Override
     public UploadedFile uploadFile(MultipartFile f) throws FileUploadFailException {
 
-        File dir = new File(LOCAL_PATH);
+        Path dir = Paths.get(LOCAL_PATH).toAbsolutePath();
         Long curTime = System.currentTimeMillis();
         String fileName = curTime + "_" + f.getOriginalFilename();
-        String fileLocation = dir.getAbsolutePath() + File.separator + fileName;
+        String fileLocation = dir.toString()+ File.separator + fileName;
 
         UploadedFile newFile = new UploadedFile();
         newFile.setFileName(fileName);
