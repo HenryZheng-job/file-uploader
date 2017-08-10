@@ -2,6 +2,7 @@ package com.henryzheng.service;
 
 import com.henryzheng.dao.UploadedFileRepository;
 import com.henryzheng.entity.UploadedFile;
+import com.henryzheng.exception.FileNotFoundException;
 import com.henryzheng.exception.FileUploadFailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,8 +33,12 @@ public class UploadedFileServiceImpl implements UploadedFileService {
 
     @Transactional
     @Override
-    public UploadedFile findFileById(Integer id) {
-        return uploadedFileRepository.findOne(id);
+    public UploadedFile findFileById(Integer id) throws FileNotFoundException{
+        UploadedFile f = uploadedFileRepository.findOne(id);
+        if (f == null) {
+            throw new FileNotFoundException("File ID is not recorded in the database!!");
+        }
+        return f;
     }
 
     @Transactional

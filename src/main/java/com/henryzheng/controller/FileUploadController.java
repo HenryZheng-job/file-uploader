@@ -45,6 +45,6 @@ public class FileUploadController {
     @ResponseStatus(code=HttpStatus.NOT_FOUND)
     @ExceptionHandler(FileNotFoundException.class)
     public String fileNotFoundExceptionHandler(Exception e) {
-        return "ERROR: File not found! " + e.getMessage();
+        return "ERROR: File not found!\n" + e.getMessage();
     }
 }
